@@ -1,0 +1,79 @@
+Docker instructions for ubuntu by Robert Brown, South Bank University, 24/06/2018
+These instructions worked for me on ubuntu 18.04 on virtual box vm
+
+INSTALLING DOCKER ON UBUNTU 18.04
+
+(1) disable ubuntu splash screen to give more information on docker service starting up, identify any problems etc.
+
+Use a text editor to edit /etc/default/grub file either from command line (nano, emacs etc.) or using GUI from file explorer at other locations > computer > etc > default > grub
+
+Comment out the following line with a # sign: GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+
+Save the file and exit text editor
+
+Run following command in room terminal: update-grub
+
+Restart machine to confirm changes have taken effect: shutdown -r now
+
+
+(2) type the following commands in root terminal, replacing <user> with your user name (adapted from convenience script instructions at https://docs.docker.com/install/linux/docker-ce/ubuntu/#upgrade-docker-ce-1):
+
+sudo apt-get install curl
+curl -fsSL get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker <user>
+shutdown -r now
+
+The system will restart, and the docker service will be running
+
+(3) run the following commands to check docker service
+
+docker --version
+docker image ls
+docker run --rm hello-world
+
+(4) getting started with Docker
+
+PULL IMAGE
+
+command: docker pull [registry][/repository] image:[version]
+default registry is docker hub, official images are at root repository, all other images are in second level directories
+Example: docker pull ubuntu:latest
+Example: docker pull rabwent11/test:v1
+
+BUILD IMAGE FROM DOCKERFILE
+
+Change working directory to the build context that contains the Dockerfile and your app
+Command: docker image build -t <name>:<version> .
+Replace name and version with something suitable. The dot at the end includes all files within the build context to the image.
+
+LIST IMAGES
+Command: docker image ls
+
+REMOVE AN IMAGE
+Command: docker image rm <name>:<version>
+
+REMOVE ALL IMAGES
+Command: docker image rm $(docker image ls -q)
+
+RUN A CONTAINER:
+Command: docker container run <name>:<version> command
+Docker engine will look for the named image locally first, and on remote repo second
+The container will exit (stop) after all processes inside it have exited
+popular options: 
+	interactive terminal -it
+	remove after exiting --rm
+Example: docker container run --rm test:v1
+Example: docker container run -it test:v1 /bin/bash
+Example: docker container run -it --rm ubuntu:latest
+
+LIST CONTAINERS
+Command: docker container ls
+Option: also list stopped containers -a
+Example: docker container ls -a
+
+REMOVE CONTAINERS
+If container is running, stop it first with: docker container stop <name:version or first unique characters of id>
+
+Command to remove: docker container rm <name:version or first unique characters of id>
+
