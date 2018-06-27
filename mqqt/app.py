@@ -29,13 +29,19 @@ topic = "orxa/openlv/test1"
 client.subscribe(topic)
 timestampPrint(f"subcribed to topic {topic}")
 
+#generate a random message
 feeder_no = random.randint(1,10)
 feeder_location = random.choice(["factory", "substation", "feeder pillar"])
 message = f"voltage violation on feeder {feeder_no} at {feeder_location} {random.randint(1,10)}"
+
+#publish message
 client.publish("orxa/openlv/test1",message)
 timestampPrint(f"published message on topic {topic}")
 
+#wait for messages
 timestampPrint(f"listening for messages for the next 5 seconds")
-time.sleep(4) # wait
-client.loop_stop() #stop the loop
+time.sleep(5)
+
+#stop waiting for messages
+client.loop_stop()
 timestampPrint(f"stopped listening for messages")
