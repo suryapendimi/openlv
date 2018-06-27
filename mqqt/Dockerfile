@@ -1,3 +1,7 @@
+# INSTRUCTIONS:
+# to build image: docker build -t mqtt:v1 .
+# to run container: docker run -it --rm mqtt:v1
+
 
 FROM ubuntu:latest
 
