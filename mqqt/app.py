@@ -11,7 +11,7 @@ def timestampPrint(msg):
 
 def msg_callback(client, userdata, message):
     msg = message.payload.decode("utf-8")
-    timestampPrint(f"new message received on topic {message.topic}: \"{str(msg)}\"")
+    timestampPrint(f"new message received on topic {message.topic}:\t\"{str(msg)}\"")
 
 
 #set up mqtt client instance
@@ -30,17 +30,17 @@ client.subscribe(topic)
 timestampPrint(f"subcribed to topic {topic}")
 
 #generate a random message
-feeder_no = random.randint(1,10)
+feeder_no, location_no = [random.randint(1,10) for _ in range(2)]
 feeder_location = random.choice(["factory", "substation", "feeder pillar"])
-message = f"voltage violation on feeder {feeder_no} at {feeder_location} {random.randint(1,10)}"
+message = f"voltage violation on feeder {feeder_no} at {feeder_location} {location_no}"
 
 #publish message
 client.publish("orxa/openlv/test1",message)
-timestampPrint(f"published message on topic {topic}")
+timestampPrint(f"published message on topic {topic}:\t\"{message}\"")
 
 #wait for messages
-timestampPrint(f"listening for messages for the next 5 seconds")
-time.sleep(5)
+timestampPrint(f"listening for messages for the next 3 seconds")
+time.sleep(3)
 
 #stop waiting for messages
 client.loop_stop()
