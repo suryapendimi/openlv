@@ -1,4 +1,4 @@
-#mqqt messaging publish/subscribe example, Robert Brown, London South Bank University, 27.06.2018
+#mqqt messaging client example, Robert Brown, London South Bank University, 27.06.2018
 
 #set mqtt server and topic parameters
 broker_address="broker.hivemq.com" #for TESTING only - see www.mqtt-dashboard.com
